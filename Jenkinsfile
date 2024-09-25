@@ -26,7 +26,7 @@
             steps {
                 dir('terraform') {
                     withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-                        sh 'terraform plan'
+                        sh 'terraform plan -out=tfplan'
                     }
                 }
             }
@@ -36,7 +36,7 @@
             steps {
                 dir('terraform') {
                     withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-                        sh 'terraform apply -auto-approve'
+                        sh 'terraform apply -auto-approve tfplan'
                     }
                 }
             }
