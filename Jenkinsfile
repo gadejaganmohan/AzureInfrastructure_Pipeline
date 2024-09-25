@@ -15,7 +15,7 @@
         stage('Initialize Terraform') {
             steps {
                 dir('terraform') {
-                    withCredentials([azureServicePrincipal(credentialsId: AzureCredentials)]) {
+                    withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                         sh 'terraform init'
                     }
                 }
@@ -25,7 +25,7 @@
         stage('Plan Infrastructure') {
             steps {
                 dir('terraform') {
-                    withCredentials([azureServicePrincipal(credentialsId: AzureCredentials)]) {
+                    withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                         sh 'terraform plan'
                     }
                 }
@@ -35,7 +35,7 @@
         stage('Apply Infrastructure') {
             steps {
                 dir('terraform') {
-                    withCredentials([azureServicePrincipal(credentialsId: AzureCredentials)]) {
+                    withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                         sh 'terraform apply -auto-approve'
                     }
                 }
