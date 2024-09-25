@@ -1,8 +1,8 @@
- pipeline {
+pipeline {
     agent any
 
     environment {
-        AZURE_CREDENTIALS_ID = 'AzureCredentials' // Replace with your Jenkins credentials ID
+        AZURE_CREDENTIALS_ID = 'AzureCredentials' // This is the ID of the credentials you added in Jenkins
     }
 
     stages {
@@ -15,6 +15,7 @@
         stage('Initialize Terraform') {
             steps {
                 dir('terraform') {
+                    // Using the Azure Service Principal credentials stored in Jenkins
                     withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                         sh 'terraform init'
                     }
@@ -26,7 +27,14 @@
             steps {
                 dir('terraform') {
                     withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-                        sh 'terraform plan -out=tfplan'
+                        // Passing the credentials securely to Terraform as environment variables
+                        sh '''
+                            terraform plan -var client_id=${AZURE_CLIENT_ID} \
+                                           -var client_secret=${AZURE_CLIENT_SECRET} \
+                                           -var tenant_id=${AZURE_TENANT_ID} \
+                                           -var subscription_id=${AZURE_SUBSCRIPTION_ID} \
+                                           -out=tfplan
+                        '''
                     }
                 }
             }
