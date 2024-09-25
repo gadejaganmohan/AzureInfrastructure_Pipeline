@@ -2,7 +2,7 @@
     agent any
 
     environment {
-        AZURE_CREDENTIALS_ID = '7c99abad-5009-4361-999a-30a54b20cb1b' // Replace with your Jenkins credentials ID
+        AZURE_CREDENTIALS_ID = 'AzureCredentials' // Replace with your Jenkins credentials ID
     }
 
     stages {
