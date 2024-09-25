@@ -9,3 +9,7 @@ variable "resource_group_name" {
 variable "location" {
     default = ""
 }
+
+variable "client_id" {}
+variable "client_secret" {}
+variable "tenant_id" {}
