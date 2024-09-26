@@ -29,11 +29,7 @@ pipeline {
                     withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                         // Passing the credentials securely to Terraform as environment variables
                         sh '''
-                            terraform plan -var client_id=${AZURE_CLIENT_ID} \
-                                           -var client_secret=${AZURE_CLIENT_SECRET} \
-                                           -var tenant_id=${AZURE_TENANT_ID} \
-                                           -var subscription_id=${AZURE_SUBSCRIPTION_ID} \
-                                           -out=tfplan
+                            terraform plan -out=tfplan
                         '''
                     }
                 }
